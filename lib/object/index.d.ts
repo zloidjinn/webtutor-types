@@ -7,7 +7,7 @@ interface Object {
   [key: string]: any;
 
   /**
-   * Выдает true, если атрубут с заданным наименованием существует,
+   * Выдает true, если атрибут с заданным наименованием существует,
    * и false - если не существует. Смотри также GetOptProperty,
    * GetOptProperty и SetProperty.
    * @param key наименование атрибута объекта
@@ -22,13 +22,13 @@ interface Object {
   AddProperty(key: string | number, name: unknown): void;
 
   /**
-   * Возвращает значение атрибута объекта. Если атрубут отсутствует, выдает undefined.
+   * Возвращает значение атрибута объекта. Если атрибут отсутствует, выдает undefined.
    * @param {string} key - наименование атрибута объекта.
-   * @param defaultValue - значение по умолчанию, возращаемое в случае
-   * отстутвия атрибута (Any). Необязятельный аргумент. По умолчанию равен undefined.
+   * @param defaultValue - значение по умолчанию, возвращаемое в случае
+   * отсутствия атрибута (Any). Необязательный аргумент. По умолчанию равен undefined.
    */
-  GetOptProperty<T = any>(key: string | number): T | undefined;
-  GetOptProperty<T = any, K = any>(key: string | number, defaultValue?: K): T | K;
+  GetOptProperty<T, K extends keyof T>(this: T, key: K): T[K] | undefined;
+  GetOptProperty<T, K extends keyof T, P>(this: T, key: K, defaultValue?: P): T[K] | P;
 
   /**
    * Выдает значение атрибута объекта. Если атрибут отсутствует, выдает ошибку.
@@ -40,7 +40,7 @@ interface Object {
   GetProperty(key: string | number): any | never;
 
   /**
-   * Устанавливает значение атрибута объекта. Если атрубут отсутствует,
+   * Устанавливает значение атрибута объекта. Если атрибут отсутствует,
    * добавляет его. Смотри также GetOptProperty() и GetProperty.
    * @param key наименование атрибута объекта.
    * @param value значение атрибута объекта.
