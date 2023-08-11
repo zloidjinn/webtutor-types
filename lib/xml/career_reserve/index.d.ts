@@ -31,10 +31,10 @@ interface CareerReserveDocumentTask extends CustomElemsBase,
   person_comment: XmlElem<string>;
   tutor_comment: XmlElem<string>;
   object_type: XmlElem<string>;
-  object_id: XmlElem<number>;
-  active_test_learning_id: XmlElem<number>;
-  event_id: XmlElem<number>;
-  event_result_id: XmlElem<number>;
+  object_id: XmlElem<number, CourseCatalogDocumentTopElem | never>;
+  active_test_learning_id: XmlElem<number, ActiveLearningCatalogDocument>;
+  event_id: XmlElem<number, EventCatalogDocument>;
+  event_result_id: XmlElem<number, EventResultCatalogDocument>;
   education_plan_id: XmlElem<number>;
   active_learning_id: XmlElem<number>;
   assessment_appraise_id: XmlElem<number>;
