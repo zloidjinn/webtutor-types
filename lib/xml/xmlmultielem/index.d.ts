@@ -142,7 +142,7 @@ interface XmMultiElem<T> extends XmElem<T> {
    * @param {K} keyValue - Значение ключа.
    * @param {string} keyName - Имя элемента, являющегося ключом. Если имя ключа не указано, используется первичный ключ.
    */
-  DeleteChildByKey<K>(value: K, name: string): void;
+  DeleteChildByKey<K>(value: K, name?: string): void;
 
   /**
    * Удаляет все дочерние элементы, удовлетворяющие заданому условию.
