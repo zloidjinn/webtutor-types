@@ -32,7 +32,7 @@ interface CareerReserveDocumentTask extends CustomElemsBase,
   tutor_comment: XmlElem<string>;
   object_type: XmlElem<string>;
   object_id: XmlElem<number, CourseCatalogDocumentTopElem | never>;
-  active_test_learning_id: XmlElem<number, ActiveLearningCatalogDocumentTopElem>;
+  active_test_learning_id: XmlElem<number, ActiveTestLearningCatalogDocumentTopElem>;
   event_id: XmlElem<number, EventCatalogDocumentTopElem>;
   event_result_id: XmlElem<number, EventResultCatalogDocumentTopElem>;
   education_plan_id: XmlElem<number, EducationPlanDocumentTopElem>;
