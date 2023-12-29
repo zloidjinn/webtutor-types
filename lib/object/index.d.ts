@@ -27,8 +27,8 @@ interface Object {
    * @param defaultValue - Значение по умолчанию, возвращаемое в случае
    * отсутствия атрибута (Any). Необязательный аргумент. По умолчанию равен undefined.
    */
-  GetOptProperty<T>(key: string | number): T | undefined;
-  GetOptProperty<T, K>(key: string | number, defaultValue?: K): T | K;
+  GetOptProperty<T, K extends keyof T>(this: T, key: K ): T[K] | undefined;
+  GetOptProperty<T, K extends keyof T, P>(this: T, key: K, defaultValue?: P): T[K] | P;
 
   /**
    * Выдает значение атрибута объекта. Если атрибут отсутствует, выдает ошибку.
