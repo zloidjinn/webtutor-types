@@ -847,7 +847,7 @@ declare namespace tools {
    * @param {string|number} documentId - Id документа.
    * @returns {T|undefined} XML документ или undefined.
    */
-  function open_doc<T = XmlDocument>(documentId: number): T | undefined;
+  function open_doc<T>(documentId: number): T | undefined;
 
   /**
    * Проверяет разрешение на доступ к указанному объекту для указанного пользователя.

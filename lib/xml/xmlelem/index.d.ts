@@ -1,4 +1,31 @@
-interface XmElem<T, ForeignElem = never> {
+type XmlOptChild<T> = {
+  /**
+   * Возвращает дочерний элемент. Находит дочерний элемент по имени.
+   * Если элемента с заданным именем нет, выдает `undefined`.
+   * Смотри также метод {@link Child}.
+   * @param {string} name - Имя дочернего элемента.
+   */
+  OptChild<K extends keyof T>(this: T, name: K): T[K] | undefined;
+};
+
+
+type XmlForeignElem<T, K> = XmlPlainElem<T> & {
+  /**
+   * Возвращает соответствующий элемент целевого массива (описанного в атрибуте `FOREIGN-ARRAY`).
+   * Если элемент не найден - возвращает ошибку.
+   */
+  ForeignElem: K | never;
+
+  /**
+   * Возвращает соответствующий элемент целевого массива, описанного в атрибуте `FOREIGN-ARRAY`.
+   * Если элемент не найден - возвращает `undefined`.
+   */
+  OptForeignElem: K | undefined;
+
+};
+
+type XmlPlainElem<T> = T & {
+  //[key: ForeignElem extends never ? keyof typeof XmlOptChild]: number;
   /**
    * Возвращает массив названий атрибутов элемента.
    * Элемент должен быть динамическим, поскольку для статических элементов атрибуты не поддерживаются.
@@ -21,7 +48,7 @@ interface XmElem<T, ForeignElem = never> {
    * Возвращает документ, в состав которого входит текущий элемент.
    * Если документа нет - возвращает ошибку.
    */
-  Doc: XmlDocument | never;
+  //Doc: XmlDocument | never;
 
   /**
    * Возвращает основное отображаемое значение элемента для внешнего использования,
@@ -54,11 +81,7 @@ interface XmElem<T, ForeignElem = never> {
    */
   ForeignDispName: string;
 
-  /**
-   * Возвращает соответствующий элемент целевого массива (описанного в атрибуте `FOREIGN-ARRAY`).
-   * Если элемент не найден - возвращает ошибку.
-   */
-  ForeignElem: ForeignElem | never;
+
 
   /**
    * Атрибут возвращает `URL` объекта, на который ссылается атрибут ForeignElem из текущего элемента.
@@ -200,13 +223,7 @@ interface XmElem<T, ForeignElem = never> {
    * Возвращает документ, в состав которого входит текущий элемент.
    * Если элемента не относится к документу - возвращает `undefined`.
    */
-  OptDoc: XmlDocument | undefined;
-
-  /**
-   * Возвращает соответствующий элемент целевого массива, описанного в атрибуте `FOREIGN-ARRAY`.
-   * Если элемент не найден - возвращает `undefined`.
-   */
-  OptForeignElem: ForeignElem | undefined;
+  //OptDoc: XmlDocument | undefined;
 
   /**
    * В случае если элемент находится в документе, открытом в экране, возвращает ссылку на экран, иначе - `undefined`.
@@ -218,7 +235,7 @@ interface XmElem<T, ForeignElem = never> {
    * Возвращает родительский элемент текущего элемента, если таковой есть.
    * Если родительского элемента нет, возвращает ошибку.
    */
-  Parent: XmlTopElem | never;
+  // Parent: XmlTopElem | never;
 
   /**
    * Возвращает предыдущий относительно текущего элемент в списке дочерних элементов родительского элемента.
@@ -573,8 +590,8 @@ interface XmElem<T, ForeignElem = never> {
    * `ForceDecimal` - выводить большие десятичные значения (больше 2^32), обычно являющиеся идентификаторами объектов,
    * в десятичном виде, а не в шестнадцатеричном, используемом по умолчанию.
    */
-  GetXml(options?: Object): string
-  GetXml(options?: string): string
+  GetXml(options?: Object): string;
+  GetXml(options?: string): string;
 
   /**
    * Добавляет новый дочерний элемент перед существующим дочерним элементом и
@@ -734,6 +751,6 @@ interface XmElem<T, ForeignElem = never> {
    * Пересчет производится по полям, имеющим атрибут `EXPR` или `EXPR-INIT`.
    */
   UpdateValues(): void;
-}
+};
 
-type XmlElem<T, ForeignElem = never> = XmElem<T, ForeignElem> & T;
+type XmlElem<T, K = never> = K extends never ? XmlPlainElem<T> : XmlForeignElem<T, K>;
